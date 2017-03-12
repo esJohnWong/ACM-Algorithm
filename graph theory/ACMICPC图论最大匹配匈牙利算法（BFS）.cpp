@@ -1,9 +1,9 @@
 /**===================================**\
-�㷨������
-����㷨�ĺ��Ļ����ҵ�һ������·����ֻ��
-���õ���BFS����Ϊÿ����һ��ƥ���������
-��·����ʱ����������ֻ��������һ�Ρ�
-Ҳ�����޸�pre����ʱ����Ӱ��ǰ�������Ĺ�����
+算法分析：
+这个算法的核心还是找到一条增广路径，只不
+过用的是BFS，因为每个点一但匹配后在找增
+广路径的时候这个点最多只会进入队列一次。
+也就是修改pre数组时不会影响前面所做的工作。
 \**===================================**/
 
 #include<iostream>
@@ -12,10 +12,10 @@
 
 using namespace std;
 
-bool biGraph[6][6];//����ͼ
-int matchRight[6] , matchLeft[6];//���ҵ����Ӧƥ���
-int vist[6] , pre[6];//vist��־һ������������·����ͬʱ�Ƿ񱻷��ʹ���preΪ���ÿ�������һ���ڵ�
-int nright , nleft , m;//����ͼ�������ߵ���������Լ����еıߵ�����
+bool biGraph[6][6];//二分图
+int matchRight[6] , matchLeft[6];//左右点的相应匹配点
+int vist[6] , pre[6];//vist标志一个点在找增广路径的同时是否被访问过，pre为左边每个点的上一个节点
+int nright , nleft , m;//二分图左右两边点的数量，以及所有的边的数量
 
 int maxMatch()
 {
@@ -31,7 +31,7 @@ int maxMatch()
 			queue<int> Q;
 			Q.push(i);
 			pre[i] = -1;
-			bool flag = false;//��־�Ƿ��ҵ�����·
+			bool flag = false;//标志是否找到增广路
 
 			while(!Q.empty() && !flag)
 			{
@@ -39,20 +39,20 @@ int maxMatch()
 				Q.pop();
 
 				for(int v = 1 ; v <= nright && !flag ; v++)
-				{//�ߴ��ڲ���û�з���
+				{//边存在并且没有访问
 					if(biGraph[u][v] && vist[v] != i)
 					{
 						vist[v] = i;
-						Q.push(matchRight[v]);//���ұߵ�ƥ�����ߵ�������
-						if(matchRight[v] > 0)//û���ҵ�����·
+						Q.push(matchRight[v]);//将右边点匹配的左边点放入队列
+						if(matchRight[v] > 0)//没有找到增广路
 						{
-							pre[matchRight[v]] = u;//��¼��ߵ��˳��
+							pre[matchRight[v]] = u;//记录左边点的顺序
 						}
-						else//�ҵ�����·
+						else//找到增广路
 						{
 							flag = true;
 							int d = u , e = v ;
-							while(d != -1)//��ԭƥ��ı�ȥ������ԭ������ƥ���еı�
+							while(d != -1)//将原匹配的边去掉加入原来不在匹配中的边
 							{
 								int t = matchLeft[d];
 								matchLeft[d] = e;
@@ -63,7 +63,7 @@ int maxMatch()
 					}
 				}
 			}
-			if(matchLeft[i] != -1)//����һ��ƥ��ı�
+			if(matchLeft[i] != -1)//新增一个匹配的边
 				res++;
 		}
 	}
@@ -72,7 +72,7 @@ int maxMatch()
 
 int main()
 {
-	freopen("D:\\cruanjian\\����\\in.txt" , "r" , stdin);
+	freopen("D:\\cruanjian\\桌面\\in.txt" , "r" , stdin);
 	while(cin>>nright>>nleft>>m)
 	{
 		for(int i = 0 ; i < m ; i++)
