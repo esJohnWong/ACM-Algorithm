@@ -4,25 +4,25 @@
 
 using namespace std;
 /**=================================================**\
-�㷨������
-Ҫ����С������֮��Ĵ�С���������������ҵ�һ�ô�С��
-����������ڵ�x,y֮���ټ�һ����[x,y]��ô�ض��γ���
-һ����,�����x,y֮��ı߳����¼ӵ�[x,y]��������һ��
-��ɾ�����γ���һ�ô�С�������������е�û������С������
-�߶������滻�������Ӧ�Ĵ�С������Ȩֵ�����ȡ����Ȩֵ
-��С�ľ���Ҫ��Ĵ�С������,��Ҫע���������Ĵ�С����
-����Ȩֵ���ܺ���С����������ȣ�˵����С��������Ψһ
+算法分析：
+要求最小生成树之后的次小生成树，当我们找到一棵次小生
+成树后，如果在点x,y之间再加一条边[x,y]那么必定形成了
+一个环,如果把x,y之间的边除了新加的[x,y]以外最大的一条
+边删除则形成了一棵次小生成树。把所有的没有在最小生成树
+边都依次替换，算出相应的次小生成树权值，最后取所有权值
+最小的就是要求的次小生成树,需要注意的是求出的次小生成
+树的权值可能和最小生成树的相等，说明最小生成树不唯一
 \**=================================================**/
 const int MAX = 0xfffffff;
 
-struct E//����ߵ����ݽṹ
+struct E//定义边的数据结构
 {
 	int u , v;
 	int w;
-	bool select;//����������Ƿ�����С��������
+	bool select;//标记这条边是否在最小生成树中
 }edge[30];
 
-struct S//����һ�����ϵ����ݽṹ�����еĵ��ǵ�ǰ����С�������еĵ�
+struct S//定义一个集合的数据结构集合中的点是当前在最小生成树中的点
 {
 	int v;
 	int next;
@@ -30,7 +30,7 @@ struct S//����һ�����ϵ����ݽṹ�����еĵ��ǵ�ǰ����С�������еĵ�
 
 int pre[12] , rank[12];
 int head[12] , tail[12];
-int length[12][12];//���ÿ�����������ߵ�Ȩֵ
+int length[12][12];//标记每两个点间的最大边的权值
 int n , m;
 
 void makeset(int x)
@@ -63,14 +63,14 @@ void Union(int x , int y)
 	link(findset(x) , findset(y));
 }
 
-void init()//��ʼ��
+void init()//初始化
 {
 	memset(head , -1 , sizeof(head));
-	for(int i = 0 ; i < n ; i++)//�Ȱ�ÿ���㶼�ŵ�������
+	for(int i = 0 ; i < n ; i++)//先把每个点都放到集合中
 	{
 		set[i].v = i + 1;
 		set[i].next = head[i + 1];
-		head[i + 1] = i;//������set�еĴ洢�߽�
+		head[i + 1] = i;//集合在set中的存储边界
 		tail[i + 1] = i;
 	}
 
@@ -104,8 +104,8 @@ void kruskal()
 		int x = findset(edge[i].u);
 		int y = findset(edge[i].v);
 
-		if(x != y)//һ����������xΪ����㣬��һ������yΪ�����
-		{//��ǰ����ı�һ����[x,y]������
+		if(x != y)//一个集合是以x为父结点，另一个是以y为父结点
+		{//当前加入的边一定是[x,y]的最大边
 			for(int e1 = head[x] ; e1 != -1 ; e1 = set[e1].next)
 			{
 				for(int e2 = head[y] ; e2 != -1 ; e2 = set[e2].next)
@@ -116,10 +116,10 @@ void kruskal()
 			}
 
 			Union(x , y);
-			set[tail[y]].next = head[x];//�ϲ������㼯
+			set[tail[y]].next = head[x];//合并两个点集
 			tail[y] = tail[x];
-			head[x] = head[y];//��Ϊ��֪���ϲ���x��y˭�Ǹ����Ծ���yΪ׼���head[x],head[y]ָ��ͬһ���ط�
-			k++;//��¼��ѡ�ߵ�����
+			head[x] = head[y];//因为不知道合并后x、y谁是根所以就以y为准最后head[x],head[y]指向同一个地方
+			k++;//记录所选边的条数
 			edge[i].select = true;
 		}
 	}
@@ -127,21 +127,21 @@ void kruskal()
 
 int main()
 {
-	freopen("D:\\cruanjian\\����\\in.txt", "r", stdin);
+	freopen("D:\\cruanjian\\桌面\\in.txt", "r", stdin);
 	while(cin>>n>>m)
 	{
 		init();
 		int mst = 0 , secmst = MAX;
 		kruskal();
 
-		for(int i = 0 ; i < m ; i++)//�����С��������Ȩֵ
+		for(int i = 0 ; i < m ; i++)//算出最小生成树的权值
 		{
 			if(edge[i].select) mst += edge[i].w;
 		}
 
 		for(int i = 0 ; i < m ; i++)
 		{
-			if(!edge[i].select)//�����ǰ��û�б�ѡ��ͼ�����С��������ɾ��������
+			if(!edge[i].select)//如果当前边没有被选择就加入最小生成树并删掉其最大边
 			{
 				int u = edge[i].u , v = edge[i].v;
 				int tmst = mst + edge[i].w - length[u][v];
