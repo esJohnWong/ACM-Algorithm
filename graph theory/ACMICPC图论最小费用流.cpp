@@ -1,9 +1,9 @@
 /**=======================================================**\
-Ëã·¨·ÖÎö£º
-×îĞ¡·ÑÓÃÁ÷¾ÍÊÇÔÚÇó×î´óÁ÷µÄÍ¬Ê±Ê¹µÃËùµÃµ½µÄÁ÷µÄ·ÑÓÃ×îĞ¡£¬ÔÚ
-Ñ°ÕÒÔö¹ãÂ·¾¶µÄÍ¬Ê±ÎÒÃÇ°´ÕÕÃ¿´ÎÑ°ÕÒµ½µÄÂ·¾¶µÄ·ÑÓÃ×ÜÊÇ×îĞ¡µÄ
-ÄÇÃ´×îºóËùÇóµÃµÄ×î´óÁ÷µÄ·ÑÓÃÒ²Ò»¶¨ÊÇ×îĞ¡µÄ¡£ÒòÎª·´Ïò±ßµÄ·Ñ
-ÓÃÊÇ¸ºÖµËùÒÔ²ÉÓÃSPFAËã·¨ÇóÔö¹ãÂ·¾¶¡£
+ç®—æ³•åˆ†æï¼š
+æœ€å°è´¹ç”¨æµå°±æ˜¯åœ¨æ±‚æœ€å¤§æµçš„åŒæ—¶ä½¿å¾—æ‰€å¾—åˆ°çš„æµçš„è´¹ç”¨æœ€å°ï¼Œåœ¨
+å¯»æ‰¾å¢å¹¿è·¯å¾„çš„åŒæ—¶æˆ‘ä»¬æŒ‰ç…§æ¯æ¬¡å¯»æ‰¾åˆ°çš„è·¯å¾„çš„è´¹ç”¨æ€»æ˜¯æœ€å°çš„
+é‚£ä¹ˆæœ€åæ‰€æ±‚å¾—çš„æœ€å¤§æµçš„è´¹ç”¨ä¹Ÿä¸€å®šæ˜¯æœ€å°çš„ã€‚å› ä¸ºåå‘è¾¹çš„è´¹
+ç”¨æ˜¯è´Ÿå€¼æ‰€ä»¥é‡‡ç”¨SPFAç®—æ³•æ±‚å¢å¹¿è·¯å¾„ã€‚
 \**=======================================================**/
 #include<iostream>
 #include<algorithm>
@@ -15,14 +15,14 @@ using namespace std;
 const int MAX = 0xfffffff;
 
 struct unit
-{//expÎªÃ¿Ìõ±ßµÄ·ÑÓÃ£¬cÎªÈİÁ¿
+{//expä¸ºæ¯æ¡è¾¹çš„è´¹ç”¨ï¼Œcä¸ºå®¹é‡
 	int v , c , exp , next;
 }edge[22];
-//castÎª´ÓÃ¿¸öµãµ½Ô´µãµÄ×îĞ¡·ÑÓÃ£¬routeÎªÔö¹ãÂ·¾¶±ß£¬preÎªÃ¿¸öµãµÄÇ°Çı
+//castä¸ºä»æ¯ä¸ªç‚¹åˆ°æºç‚¹çš„æœ€å°è´¹ç”¨ï¼Œrouteä¸ºå¢å¹¿è·¯å¾„è¾¹ï¼Œpreä¸ºæ¯ä¸ªç‚¹çš„å‰é©±
 int head[8] , cast[8] , route[8] , pre[8];
-int n , m , source , sink;//µã£¬±ß£¬Ô´£¬»ã
-bool inqueue[8];//±êÖ¾Ò»¸öµãÊÇ·ñÔÚ¶ÓÁĞÀïÃæ
-//Ìí¼ÓÒ»Ìõ±ß
+int n , m , source , sink;//ç‚¹ï¼Œè¾¹ï¼Œæºï¼Œæ±‡
+bool inqueue[8];//æ ‡å¿—ä¸€ä¸ªç‚¹æ˜¯å¦åœ¨é˜Ÿåˆ—é‡Œé¢
+//æ·»åŠ ä¸€æ¡è¾¹
 void addEdge(int u , int v , int c , int exp , int &num)
 {
 	edge[num].c = c;
@@ -32,13 +32,13 @@ void addEdge(int u , int v , int c , int exp , int &num)
 	head[u] = num++;
 
 	edge[num].c = 0;
-	edge[num].exp = -exp;//·´Ïò±ßµÄ·ÑÓÃÖÃÎªÔ­±ßµÄÏà·´Êı
+	edge[num].exp = -exp;//åå‘è¾¹çš„è´¹ç”¨ç½®ä¸ºåŸè¾¹çš„ç›¸åæ•°
 	edge[num].next = head[v];
 	edge[num].v = u;
 	head[v] = num++;
 }
 
-bool SPFA()//ËÑË÷Ò»Ìõ·ÑÓÃ×îĞ¡µÄÔö¹ãÂ·¾¶
+bool SPFA()//æœç´¢ä¸€æ¡è´¹ç”¨æœ€å°çš„å¢å¹¿è·¯å¾„
 {
 	queue<int> Q;
 	memset(inqueue , false , sizeof(inqueue));
@@ -57,10 +57,10 @@ bool SPFA()//ËÑË÷Ò»Ìõ·ÑÓÃ×îĞ¡µÄÔö¹ãÂ·¾¶
 
 		for(int k = head[u] ; k != -1 ; k = edge[k].next)
 		{
-			if(edge[k].c)//±ß´æÔÚ
+			if(edge[k].c)//è¾¹å­˜åœ¨
 			{
 				int v = edge[k].v;
-				if(cast[v]-edge[k].exp > cast[u])//Âú×ãËÉ³ÚÌõ¼ş
+				if(cast[v]-edge[k].exp > cast[u])//æ»¡è¶³æ¾å¼›æ¡ä»¶
 				{
 					cast[v] = cast[u]+edge[k].exp;
 					pre[v] = u;
@@ -88,7 +88,7 @@ int minCastFlow(int &maxFlow)
 	{
 		int u = sink;
 		int minf = MAX;
-		while(pre[u] != -1)//ÕÒµ½Ôö¹ãÂ·¾¶ÉÏµÄÆ¿¾±±ß
+		while(pre[u] != -1)//æ‰¾åˆ°å¢å¹¿è·¯å¾„ä¸Šçš„ç“¶é¢ˆè¾¹
 		{
 			if(minf > edge[route[u]].c)
 				minf = edge[route[u]].c;
@@ -96,14 +96,14 @@ int minCastFlow(int &maxFlow)
 		}
 
 		u = sink;
-		while(pre[u] != -1)//ĞŞ¸ÄÔö¹ãÂ·¾¶ÉÏµÄÈ¨Öµ
+		while(pre[u] != -1)//ä¿®æ”¹å¢å¹¿è·¯å¾„ä¸Šçš„æƒå€¼
 		{
 			edge[route[u]].c -= minf;
 			edge[route[u]^1].c += minf;
 			u = pre[u];
 		}
 
-		maxFlow += minf;//ĞŞ¸Ä×î´óÁ÷ºÍ·ÑÓÃ
+		maxFlow += minf;//ä¿®æ”¹æœ€å¤§æµå’Œè´¹ç”¨
 		minCast += minf*cast[sink];
 	}
 	return minCast;
@@ -111,7 +111,7 @@ int minCastFlow(int &maxFlow)
 
 int main()
 {
-	freopen("D:\\cruanjian\\×ÀÃæ\\in.txt" , "r" , stdin);
+	freopen("D:\\cruanjian\\æ¡Œé¢\\in.txt" , "r" , stdin);
 	while(cin>>n>>m)
 	{
 		memset(head , -1 , sizeof(head));
