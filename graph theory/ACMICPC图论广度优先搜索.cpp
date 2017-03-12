@@ -4,9 +4,9 @@
 
 using namespace std;
 /**============================**\
-Í¼µÄ¹ã¶ÈÓÅÏÈËã·¨²»½âÊÍ Ì«¼òµ¥ÁË
+å›¾çš„å¹¿åº¦ä¼˜å…ˆç®—æ³•ä¸è§£é‡Š å¤ªç®€å•äº†
 \**============================**/
-struct E//±ßµÄÊý¾Ý½á¹¹
+struct E//è¾¹çš„æ•°æ®ç»“æž„
 {
 	int v;
 	int next;
@@ -15,7 +15,7 @@ struct E//±ßµÄÊý¾Ý½á¹¹
 int n , m , head[8] ,sume;
 bool visit[8];
 
-void addedge(int u , int v)//Ñ¹ÈëÒ»Ìõ±ß
+void addedge(int u , int v)//åŽ‹å…¥ä¸€æ¡è¾¹
 {
 	edge[sume].v = v;
 	edge[sume].next = head[u];
@@ -54,7 +54,7 @@ void BFS(int x)
 
 int main()
 {
-	freopen("D:\\cruanjian\\×ÀÃæ\\in.txt", "r", stdin);
+	freopen("D:\\cruanjian\\æ¡Œé¢\\in.txt", "r", stdin);
 	while(cin>>n>>m)
 	{
 		memset(head , -1 , sizeof(head));
