@@ -1,10 +1,10 @@
 /**==================================================**\
-Ëã·¨·ÖÎö£º
-DinicËã·¨ºÍSAPËã·¨ÓĞÒìÇúÍ¬¹¤Ö®Ãî£¬Ëü°Ñ²ĞÁôÍøÂ·±ä³É·Ö²ã
-ÍøÂç£¬Ã¿´ÎÑ°ÕÒ¶¼ÕÒ×î¶ÌµÄÂ·¾¶È¥Ôö¹ã¡£ÔÚ²ĞÁôÍøÂçÉÏÃ¿¸öµã
-¶¼ÓĞÒ»¸ö²ã±àºÅ£¬Ã¿´Î¶¼°´ÕÕlevel[v]=level[u]+1µÄ±ß<u,v>
-Ôö¹ã¡£Èç¹ûÔÚ²ĞÁôÍøÂçÀï¶ÔÃ¿¸öµã±àºÅÊ±ÎŞ·¨¶Ô»ãµã±àºÅÔòËµ
-Ã÷ÒÑ¾­Ã»ÓĞÔö¹ãÂ·ÁË¡£
+ç®—æ³•åˆ†æï¼š
+Dinicç®—æ³•å’ŒSAPç®—æ³•æœ‰å¼‚æ›²åŒå·¥ä¹‹å¦™ï¼Œå®ƒæŠŠæ®‹ç•™ç½‘è·¯å˜æˆåˆ†å±‚
+ç½‘ç»œï¼Œæ¯æ¬¡å¯»æ‰¾éƒ½æ‰¾æœ€çŸ­çš„è·¯å¾„å»å¢å¹¿ã€‚åœ¨æ®‹ç•™ç½‘ç»œä¸Šæ¯ä¸ªç‚¹
+éƒ½æœ‰ä¸€ä¸ªå±‚ç¼–å·ï¼Œæ¯æ¬¡éƒ½æŒ‰ç…§level[v]=level[u]+1çš„è¾¹<u,v>
+å¢å¹¿ã€‚å¦‚æœåœ¨æ®‹ç•™ç½‘ç»œé‡Œå¯¹æ¯ä¸ªç‚¹ç¼–å·æ—¶æ— æ³•å¯¹æ±‡ç‚¹ç¼–å·åˆ™è¯´
+æ˜å·²ç»æ²¡æœ‰å¢å¹¿è·¯äº†ã€‚
 \**==================================================**/
 
 #include<iostream>
@@ -20,11 +20,11 @@ struct unit
 {
 	int v , c , next;
 }edge[25];
-//levelÎªÃ¿¸öµãµÄ²ãÊı±àºÅ
+//levelä¸ºæ¯ä¸ªç‚¹çš„å±‚æ•°ç¼–å·
 int head[10] , level[10];
 int  n , m , source , sink;
 
-void addEdge(int u , int v , int c , int &num)//Ìí¼ÓÒ»Ìõ±ß
+void addEdge(int u , int v , int c , int &num)//æ·»åŠ ä¸€æ¡è¾¹
 {
 	edge[num].v = v;
 	edge[num].c = c;
@@ -37,7 +37,7 @@ void addEdge(int u , int v , int c , int &num)//Ìí¼ÓÒ»Ìõ±ß
 	head[v] = num++;
 }
 
-bool searchLevel()//ÓÃbfs¶ÔÃ¿¸öµã±àºÅ
+bool searchLevel()//ç”¨bfså¯¹æ¯ä¸ªç‚¹ç¼–å·
 {
 	memset(level , -1 , sizeof(level));
 	queue<int> Q;
@@ -64,21 +64,21 @@ bool searchLevel()//ÓÃbfs¶ÔÃ¿¸öµã±àºÅ
 }
 
 int DinicDfs(int u , int minf)
-{//minfÎªµ±Ç°Ôö¹ãÂ·¾¶ÖĞÆ¿¾±±ßµÄÈİÁ¿
+{//minfä¸ºå½“å‰å¢å¹¿è·¯å¾„ä¸­ç“¶é¢ˆè¾¹çš„å®¹é‡
 	if(u == sink)
 		return minf;
 
-	int ret = 0;//´Óµ±Ç°Õâ¸öµã³ö·¢ÕÒµ½µÄËùÓĞÁ÷Á¿Ö®ºÍ
+	int ret = 0;//ä»å½“å‰è¿™ä¸ªç‚¹å‡ºå‘æ‰¾åˆ°çš„æ‰€æœ‰æµé‡ä¹‹å’Œ
 	for(int k =  head[u] ; k != -1 ; k = edge[k].next)
 	{
 		int v = edge[k].v;
 		if(edge[k].c && level[v] == level[u]+1)
-		{//min(minf-ret , edge[k].c)µÄÒâË¼ÊÇĞŞ¸ÄÔö¹ãÂ·¾¶ÖĞÆ¿¾±±ßµÄÈİÁ¿
+		{//min(minf-ret , edge[k].c)çš„æ„æ€æ˜¯ä¿®æ”¹å¢å¹¿è·¯å¾„ä¸­ç“¶é¢ˆè¾¹çš„å®¹é‡
 			int f = DinicDfs(v , min(minf-ret , edge[k].c));
 			edge[k].c -= f;
 			edge[k^1].c += f;
 			ret +=f;
-			//Æ¿¾±±ßµÄÈİÁ¿±»ÏûºÄ´ù¾¡ËµÃ÷´Óµ±Ç°µã³ö·¢Ã»ÓĞÔö¹ãÂ·ÁË£¬Òª»ØË·
+			//ç“¶é¢ˆè¾¹çš„å®¹é‡è¢«æ¶ˆè€—æ®†å°½è¯´æ˜ä»å½“å‰ç‚¹å‡ºå‘æ²¡æœ‰å¢å¹¿è·¯äº†ï¼Œè¦å›æœ”
 			if(ret == minf) return ret;
 		}
 	}
@@ -88,7 +88,7 @@ int DinicDfs(int u , int minf)
 int Dinic()
 {
 	int maxFlow = 0;
-	while(searchLevel())//²ĞÁôÍøÂç»¹¿ÉÒÔ·Ö²ãËµÃ÷´ÓÔ´µãµ½»ãµã»¹¿ÉÒÔÕÒÔö¹ãÂ·¾¶
+	while(searchLevel())//æ®‹ç•™ç½‘ç»œè¿˜å¯ä»¥åˆ†å±‚è¯´æ˜ä»æºç‚¹åˆ°æ±‡ç‚¹è¿˜å¯ä»¥æ‰¾å¢å¹¿è·¯å¾„
 	{
 		maxFlow += DinicDfs(source , MAX);
 	}
@@ -97,7 +97,7 @@ int Dinic()
 
 int main()
 {
-	freopen("D:\\cruanjian\\×ÀÃæ\\in.txt" , "r" , stdin);
+	freopen("D:\\cruanjian\\æ¡Œé¢\\in.txt" , "r" , stdin);
 	while(cin>>n>>m)
 	{
 		memset(head , -1 , sizeof(head));
