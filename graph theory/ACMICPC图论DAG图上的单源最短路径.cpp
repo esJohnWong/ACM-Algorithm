@@ -3,11 +3,11 @@
 
 using namespace std;
 /**===============================**\
-Ëã·¨·ÖÎö£º
-DAGÍ¼¼´ÓĞÏòÎŞ»ØÂ·Í¼£¬ËüµÄ×î¶Ì¾àÀë×Ü
-ÊÇ´æÔÚµÄ£¬ÒòÎª²»¿ÉÄÜÓĞ¸ºÈ¨»ØÂ·¡£
-Ê×ÏÈ¶ÔÍ¼½øĞĞÍØÆËÅÅĞò£¬È»ºó°´ÕÕÍØÆËÅÅ
-ĞòµÄË³Ğò¶ÔÃ¿¸öµã³öÈ¥µÄ±ß½øĞĞËÉ³Ú²Ù×÷¡£
+ç®—æ³•åˆ†æï¼š
+DAGå›¾å³æœ‰å‘æ— å›è·¯å›¾ï¼Œå®ƒçš„æœ€çŸ­è·ç¦»æ€»
+æ˜¯å­˜åœ¨çš„ï¼Œå› ä¸ºä¸å¯èƒ½æœ‰è´Ÿæƒå›è·¯ã€‚
+é¦–å…ˆå¯¹å›¾è¿›è¡Œæ‹“æ‰‘æ’åºï¼Œç„¶åæŒ‰ç…§æ‹“æ‰‘æ’
+åºçš„é¡ºåºå¯¹æ¯ä¸ªç‚¹å‡ºå»çš„è¾¹è¿›è¡Œæ¾å¼›æ“ä½œã€‚
 \**===============================**/
 const int MAX = 0xfffffff;
 
@@ -15,11 +15,11 @@ struct E
 {
 	int v, c , next;
 }edge[12];
-//queueÎªÍØÆËÅÅĞòµÄ½á¹û£¬indegreeÎªµãµÄÈë¶È,distÎª×îºóµÄ½á¹û£¬preÎªÃ¿¸öµãµÄÇ°Çı½áµã
+//queueä¸ºæ‹“æ‰‘æ’åºçš„ç»“æœï¼Œindegreeä¸ºç‚¹çš„å…¥åº¦,distä¸ºæœ€åçš„ç»“æœï¼Œpreä¸ºæ¯ä¸ªç‚¹çš„å‰é©±ç»“ç‚¹
 int head[7] , queue[7] , indegree[7] , dist[7] , pre[7];
-int n , m , source;//sourceÎªÔ´µã
+int n , m , source;//sourceä¸ºæºç‚¹
 
-int  topsort()//ÍØÆËÅÅĞò
+int  topsort()//æ‹“æ‰‘æ’åº
 {
 	int iq = 0;
 	for(int i = 1 ; i <= n ; i++)
@@ -33,7 +33,7 @@ int  topsort()//ÍØÆËÅÅĞò
 		for(int k = head[queue[i]] ; k != -1 ; k = edge[k].next)
 		{
 			indegree[edge[k].v]--;
-			if(indegree[edge[k].v] == 0)//Ã¿´ÎÑ°ÕÒÈë¶ÈÎª0µÄµã
+			if(indegree[edge[k].v] == 0)//æ¯æ¬¡å¯»æ‰¾å…¥åº¦ä¸º0çš„ç‚¹
 			{
 				queue[iq++] = edge[k].v;
 			}
@@ -44,21 +44,21 @@ int  topsort()//ÍØÆËÅÅĞò
 
 void DAG()
 {
-	for(int i = 1 ; i <= n ; i++)//³õÊ¼»¯²Ù×÷
+	for(int i = 1 ; i <= n ; i++)//åˆå§‹åŒ–æ“ä½œ
 	{
 		dist[i] = MAX;
 		pre[i] = 0;
 	}
 	dist[source] = 0;
 
-	int iq = topsort();//½øĞĞÍØÆËÅÅĞò
+	int iq = topsort();//è¿›è¡Œæ‹“æ‰‘æ’åº
 
-	for(int i = 0 ; i < iq ; i++)//°´ÕÕÍØÆËÅÅĞò¶ÔÃ¿¸öµãµÄ³ö±ß½øĞĞËÉ³Ú²Ù×÷
+	for(int i = 0 ; i < iq ; i++)//æŒ‰ç…§æ‹“æ‰‘æ’åºå¯¹æ¯ä¸ªç‚¹çš„å‡ºè¾¹è¿›è¡Œæ¾å¼›æ“ä½œ
 	{
 		for(int k = head[queue[i]] ; k != -1 ; k = edge[k].next)
 		{
 			int v = edge[k].v;
-			if(dist[v] > dist[queue[i]] + edge[k].c)//¿ÉÒÔËÉ³Ú
+			if(dist[v] > dist[queue[i]] + edge[k].c)//å¯ä»¥æ¾å¼›
 			{
 				dist[v] = dist[queue[i]] + edge[k].c;
 				pre[v] = queue[i];
