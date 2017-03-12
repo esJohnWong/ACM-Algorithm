@@ -3,28 +3,28 @@
 
 using namespace std;
 /**========================================**\
-Ëã·¨·ÖÎö£º
-bellmanFordËã·¨¿ÉÒÔÇóÓĞ¸ºÈ¨±ßµÄÍ¼µÄ×î¶ÌÂ·¾¶£¬
-Èç¹ûÓĞ¸ºÈ¨»ØÂ·ÔòËã·¨·µ»Øfalse£¬·ñÔò·µ»Øtrue¡£
-Ëã·¨¿ªÊ¼Ê±½«dist¸³ÎªÎŞÇî´ó£¬Ô´µãµÄdistÎª0¡£
-Ëã·¨¾­¹ın-1´ÎÑ­»·½áÊøÃ¿´Î¶¼°ÑËùÓĞµÄ±ßËÉ³ÚÒ»±é
-ÒòÎªn¸öµã×î³¤µÄ¼òµ¥×î¶ÌÂ·¾¶Ò²¾Ín-1Ìõ±ß¡£ËÉ³Ú
-¼¼ÊõÎªÈç¹ûdist[v] > dist[u] + w[u][v]£¬Ôò°Ñ
-dist[v] = dist[u] + w[u][v]¡£
-Èç¹ûÍ¼ÖĞ´æÔÚ¸ºÈ¨»ØÂ·ÔòÖÁÉÙÓĞÒ»Ìõ±ß
+ç®—æ³•åˆ†æï¼š
+bellmanFordç®—æ³•å¯ä»¥æ±‚æœ‰è´Ÿæƒè¾¹çš„å›¾çš„æœ€çŸ­è·¯å¾„ï¼Œ
+å¦‚æœæœ‰è´Ÿæƒå›è·¯åˆ™ç®—æ³•è¿”å›falseï¼Œå¦åˆ™è¿”å›trueã€‚
+ç®—æ³•å¼€å§‹æ—¶å°†distèµ‹ä¸ºæ— ç©·å¤§ï¼Œæºç‚¹çš„distä¸º0ã€‚
+ç®—æ³•ç»è¿‡n-1æ¬¡å¾ªç¯ç»“æŸæ¯æ¬¡éƒ½æŠŠæ‰€æœ‰çš„è¾¹æ¾å¼›ä¸€é
+å› ä¸ºnä¸ªç‚¹æœ€é•¿çš„ç®€å•æœ€çŸ­è·¯å¾„ä¹Ÿå°±n-1æ¡è¾¹ã€‚æ¾å¼›
+æŠ€æœ¯ä¸ºå¦‚æœdist[v] > dist[u] + w[u][v]ï¼Œåˆ™æŠŠ
+dist[v] = dist[u] + w[u][v]ã€‚
+å¦‚æœå›¾ä¸­å­˜åœ¨è´Ÿæƒå›è·¯åˆ™è‡³å°‘æœ‰ä¸€æ¡è¾¹
 dist[v] > dist[u] + w[u][v]
 \**========================================**/
 const int MAX = 0xffffff;
 
-struct E//±ßµÄÊı¾İ½á¹¹
+struct E//è¾¹çš„æ•°æ®ç»“æ„
 {
-	int v , c , next;//cÎª±ßµÄÈ¨Öµ
+	int v , c , next;//cä¸ºè¾¹çš„æƒå€¼
 }edge[12];
-//distÎªÔ´µãµ½Ã¿¸öµãµÄ×î¶Ì¾àÀë
+//distä¸ºæºç‚¹åˆ°æ¯ä¸ªç‚¹çš„æœ€çŸ­è·ç¦»
 int head[6] , dist[6] , pre[6];
-int source , n , m;//nÊÇµãµÄ¸öÊı£¬mÊÇ±ßµÄ¸öÊı
+int source , n , m;//næ˜¯ç‚¹çš„ä¸ªæ•°ï¼Œmæ˜¯è¾¹çš„ä¸ªæ•°
 
-void addedge(int u , int v , int c , int &num)//Ñ¹ÈëÒ»Ìõ±ß
+void addedge(int u , int v , int c , int &num)//å‹å…¥ä¸€æ¡è¾¹
 {
 	edge[num].c = c;
 	edge[num].v = v;
@@ -34,23 +34,23 @@ void addedge(int u , int v , int c , int &num)//Ñ¹ÈëÒ»Ìõ±ß
 
 bool bellmanFord()
 {
-	for(int i = 1 ; i <= n ; i++)//³õÊ¼»¯
+	for(int i = 1 ; i <= n ; i++)//åˆå§‹åŒ–
 	{
 		dist[i] = MAX;
 		pre[i] = 0;
 	}
-	dist[source] = 0;//Ô´µãµ½×Ô¼ºµÄ¾àÀëÎª0
+	dist[source] = 0;//æºç‚¹åˆ°è‡ªå·±çš„è·ç¦»ä¸º0
 
-	for(int i = 1 ; i < n ; i++)//n-1´Î²Ù×÷
+	for(int i = 1 ; i < n ; i++)//n-1æ¬¡æ“ä½œ
 	{
-		for(int u = 1 ; u <= n ; u++)//Ã¿´ÎËÉ³ÚËùÓĞµÄ±ß
+		for(int u = 1 ; u <= n ; u++)//æ¯æ¬¡æ¾å¼›æ‰€æœ‰çš„è¾¹
 		{
 			if(dist[u] == MAX) continue;
 			int k = head[u];
 			while(k != -1)
 			{
 				int v = edge[k].v;
-				if(edge[k].c != MAX && dist[v] > dist[u] + edge[k].c)//ËÉ³Ú²Ù×÷
+				if(edge[k].c != MAX && dist[v] > dist[u] + edge[k].c)//æ¾å¼›æ“ä½œ
 				{
 					dist[v] = dist[u] + edge[k].c;
 					pre[v] = u;
@@ -60,7 +60,7 @@ bool bellmanFord()
 		}
 	}
 
-	for(int u = 1 ; u <= n ; u++)//ÅĞ¶ÏÊÇ·ñÓĞ¸ºÈ¨»ØÂ·
+	for(int u = 1 ; u <= n ; u++)//åˆ¤æ–­æ˜¯å¦æœ‰è´Ÿæƒå›è·¯
 	{
 		if(dist[u] == MAX) continue;
 		for(int k = head[u] ; k != -1 ; k = edge[k].next)
