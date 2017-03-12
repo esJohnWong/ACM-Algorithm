@@ -7,19 +7,19 @@ struct E
 {
 	int v;
 	int next;
-}edge[20];//ÓÃÁ´Ê½Ç°ÏòĞÇ´æ´¢±ß
+}edge[20];//ç”¨é“¾å¼å‰å‘æ˜Ÿå­˜å‚¨è¾¹
 
-int head[9] , sume , n , m;//nµã£¬m±ß£¬sumeµ±Ç°±ß²åÈëµÄÎ»ÖÃ
+int head[9] , sume , n , m;//nç‚¹ï¼Œmè¾¹ï¼Œsumeå½“å‰è¾¹æ’å…¥çš„ä½ç½®
 bool visit[9];
 
-void add_edge(int u ,int v)//²åÈëÒ»Ìõ±ß
+void add_edge(int u ,int v)//æ’å…¥ä¸€æ¡è¾¹
 {
 	edge[sume].v = v;
 	edge[sume].next = head[u];
 	head[u] = sume++;
 }
 
-void DFS(int x)//Éî¶ÈÓÅÏÈËÑË÷
+void DFS(int x)//æ·±åº¦ä¼˜å…ˆæœç´¢
 {
 	visit[x] = true;
 
@@ -35,7 +35,7 @@ void DFS(int x)//Éî¶ÈÓÅÏÈËÑË÷
 
 int main()
 {
-	freopen("D:\\cruanjian\\×ÀÃæ\\in.txt", "r", stdin);
+	freopen("D:\\cruanjian\\æ¡Œé¢\\in.txt", "r", stdin);
 	while(cin >> n >> m)
 	{
 		sume = 0;
@@ -45,7 +45,7 @@ int main()
 		{
 			int u , v;
 			cin >> u >> v;
-			add_edge(u , v);//²åÈëÎªÎŞÏò±ß
+			add_edge(u , v);//æ’å…¥ä¸ºæ— å‘è¾¹
 			add_edge(v , u);
 		}
 
